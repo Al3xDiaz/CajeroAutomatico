@@ -9,6 +9,7 @@ import {
   NavLink,
   NavbarText
  } from 'reactstrap';
+ import { Link } from 'react-router-dom';
 import '../css/NavMenu.css';
 
 export class NavMenu extends Component {
@@ -33,12 +34,12 @@ export class NavMenu extends Component {
     return (
       <header>
         <Navbar className="bg-info" light expand="md">
-          <NavbarBrand href="/">Cajero Automatico</NavbarBrand>
+          <NavbarBrand  tag={Link} to="/">Cajero Automatico</NavbarBrand>
           <NavbarToggler onClick={this.toggleNavbar} />
           <Collapse isOpen={this.collapsed} navbar>
             <Nav className="mr-auto" navbar>
               <NavItem>
-                <NavLink href="/retirar/">Retiros</NavLink>
+                <NavLink tag={Link} to="/retirar">Retiros</NavLink>
               </NavItem>
             </Nav>
             <NavbarText>Simple Text</NavbarText>

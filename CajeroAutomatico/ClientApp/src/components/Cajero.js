@@ -9,30 +9,31 @@ export class Cajero extends React.Component
             cantidades:{"500":0,"100":0,"50":0,"20":0},
             Billetes:
             [
-                {valor:500,cant:0},
-                {valor:100,cant:0},
-                {valor:50,cant:0},
-                {valor:20,cant:0}],
+                {valor:500},
+                {valor:100},
+                {valor:50},
+                {valor:20}],
             cantDinero:5000
         }
         this.cantidadBilletes=this.cantidadBilletes.bind(this);
     }
     cantidadBilletes(){      
         let estado=this.state;
-        for (const iterator of this.state.Billetes) {
-            while (iterator.valor<=estado.cantDinero){
-                iterator.cant=iterator.cant+1
-                estado.cantDinero=estado.cantDinero-iterator.valor
+        let hola=0;
+        for (const billeteActual of this.state.Billetes) {
+            while (billeteActual.valor<=estado.cantDinero){
+                hola=estado.cantidades[billeteActual.valor];
+                estado.cantidades[billeteActual.valor]=estado.cantidades[billeteActual.valor]+1;
+                estado.cantDinero=estado.cantDinero-billeteActual.valor
             }
         }
-        this.state=estado;
-        console.log(this.state);
-        
+        this.setState(estado);     
     }
+    
     render()
     {
-        this.cantidadBilletes();
         return(<div>
+            <button onClick={this.cantidadBilletes}>prueba</button>
             <Billetes cantidades={this.state.cantidades} />
         </div>)
     }
