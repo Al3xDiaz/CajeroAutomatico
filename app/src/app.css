@@ -1,0 +1,84 @@
+.app {
+    width: 90%;
+    margin-left: 5% !important;
+    justify-content: space-evenly;
+}
+
+@media (min-width:1024px) {
+    #root {
+        margin-top: 10% !important;
+        margin-bottom: auto !important;
+    }
+    .cajero {
+        height: 200px;
+        margin-left: 0%;
+    }
+    .display {
+        border-style: solid !important;
+        border: black;
+    }
+}
+
+@media (max-width:1024px) {
+    .display {
+        margin-top: 20px !important;
+        width: 60% !important;
+    }
+    .cajero {
+        margin-left: 0%;
+        height: 150;
+        width: 60% !important;
+    }
+    .col-sm-3 {
+        width: 25% !important;
+    }
+    .col-sm-3>.btn {
+        width: 100% !important;
+    }
+    .display {
+        border-style: solid !important;
+        border: black;
+        height: 200px;
+    }
+}
+
+@media (max-width: 712px) {
+    .cajero {
+        height: 100%;
+        width: 100% !important;
+    }
+    .display{
+        margin-top: 20px !important;
+        width: 100% !important;
+    }
+    .col-sm-3 {
+        width: 25% !important;
+    }
+    .col-sm-3>.btn {
+        width: 100% !important;
+    }
+    .row>* {
+        padding-left: 0px !important;
+        padding-right: 0px !important;
+    }
+    .row {
+        --bs-gutter-x: -1.5rem !important;
+        /*margin-right:0px !important;
+        margin-left:0px !important;*/
+        margin-bottom: 1%;
+    }
+    .offset-sm-6 {
+        margin-left: 50%;
+    }
+}
+
+.cajero>.row {
+    justify-content: flex-end;
+    height: 100%;
+}
+
+.btn {
+    margin-top: 2% !important;
+    width: 100% !important;
+    height: 90%;
+}
