@@ -1,6 +1,5 @@
 FROM node:12.18.3-alpine as build
 WORKDIR /app
-COPY .env .
 RUN source .env
 ENV PATH /app/node_modules/.bin:$PATH
 COPY app/package.json /app
