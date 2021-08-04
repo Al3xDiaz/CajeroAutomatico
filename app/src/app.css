@@ -3,7 +3,9 @@
     margin-left: 5% !important;
     justify-content: space-evenly;
 }
-
+.colums{
+    margin-bottom: 1%;
+}
 @media (min-width:1024px) {
     #root {
         margin-top: 10% !important;
@@ -81,4 +83,8 @@
     margin-top: 2% !important;
     width: 100% !important;
     height: 90%;
+}
+
+.cero{
+    margin-right: 50%;
 }
