@@ -2,9 +2,27 @@ import { Row, Col, Input, Button } from 'reactstrap';
 import React, { useState } from 'react';
 import './app.css'
 //import { shape } from './forms/svg.svg'
+let billetes = []
+
 function App() {
+  const backMoney=async ()=>{
+    if(billetes.length>0) return null;
+    try {
+      var response =await (await fetch('/billetes.json')).json()
+      billetes= response;
+      
+    } catch (error) {
+      console.log(error);
+      billetes=[]
+      alert("no se pudo conectar con el servidor :(")      
+    }
+    let totalDinero=0
+    for(let i of billetes){
+      totalDinero+= i.cantidad*i.value
+    }
+  }
   const uriCloudDinary="https://res.cloudinary.com/dd7jrtxu5/image/upload/w_300/CajeroAutomatico/"
-  const billetes=[500,100,50,20,10,5,2,1]
+  backMoney();
   const [cantidad, setcantidad] = useState('');
   const pressNumber = btn => {
     setcantidad((cantidad + btn.target.dataset.value).trim())
@@ -13,26 +31,39 @@ function App() {
     setcantidad((cantidad.substr(0, cantidad.length - 1)))
   }
   const cancel = () => {
+    getCanvas()
     setcantidad('')
   }
   const pressSuccess = () => {
     let result={};
     let remaiting=cantidad;
-    billetes.forEach((i)=>{
-      const value=parseInt(remaiting/i)
-      if (value>0){
-        result[i]={value}
-        remaiting=remaiting%i;
+    for (let i of billetes) {
+      if (remaiting>0) {
+        const value=parseInt(remaiting/i.value)
+        if (value<i.cantidad){
+          result[i.value]={value}
+          remaiting=remaiting-(value * i.cantidad);
+        }
+        else{
+          result[i.value]={value:i.cantidad}
+          remaiting=remaiting-(i.value * i.cantidad);
+        }
       }
-    })
-    //result.remaiting=remaiting;
-    drawImages(result)
+    }
+    let paper=getCanvas()
+    if(remaiting>0) 
+      alert('fondos insuficientes!!! :(')
+    else 
+      drawImages(paper,result)
   }
-  const drawImages=(retirados)=>{
-    let position=6;
+  const getCanvas=()=>{
     const canvas=document.getElementById('draw')
     let paper=canvas.getContext('2d')
     paper.clearRect(0, 0, canvas.width, canvas.height);
+    return paper;
+  }
+  const drawImages=(paper,retirados)=>{
+    let position=6;
     const images=[]
     Object.keys(retirados).forEach((i)=>{
       const image=new Image()
@@ -55,7 +86,7 @@ function App() {
         <Col className="cajero" sm='6'>
           <Row>
             <Col className='colums' sm='12'>
-              <Input type="text" value={cantidad} />
+              <Input type="text" defaultValue={cantidad} />
             </Col>
             <SvgComponent color="primary" text='1' onClick={pressNumber} />
             <SvgComponent color="primary" text='2' onClick={pressNumber} />
